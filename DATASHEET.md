@@ -34,7 +34,7 @@ Composition
 - The original incident data underwent augmentation, including weather lookup, time and location parsing, and rank assignments. No explicit labeling was mentioned beyond inherent data features.
 
 2. Was the “raw” data saved in addition to the preprocessed/cleaned/labeled data (e.g., to support unanticipated future uses)?
-- Raw data from Normal Police Department passed as incident urls is not saved but the intermediate results are extracted as dictionary on which further augmentation can take place to produce the augmented data.
+- Raw data from Normal Police Department passed as incident urls is not saved but the intermediate results are extracted as dictionary on which further augmentation took place to produce the augmented data.
 
 ## Uses
 

@@ -4,7 +4,7 @@
 
 ## Description
 <div style="text-align: justify">
-Norman, Oklahoma police department regularly reports incidents, arrests, and other activities. In the assignment0 we extracted incidents and stored them in database. Now our goal is to further process the extracted information and generated augmented data such as "
+Norman, Oklahoma police department regularly reports incidents, arrests, and other activities. In the assignment0 we extracted incidents and stored them in database. Now our goal is to further process the extracted information and generate augmented data such as "
 Day of the Week", "Time of Day", "Weather", "Location Rank" etc. so that information can be used for end stream purposes.
 </div>
 
@@ -33,6 +33,11 @@ $ pipenv install requests
 ## How to Run
 ```commandline
 $ pipenv run python assignment2/main.py --urls <file_name.csv>
+```
+
+## How to Test
+```commandline
+$ pipenv run python -m pytest
 ```
 
 ## Demo
@@ -195,5 +200,5 @@ This function outputs the augmented data for a single incident record in a struc
 - `geocoding` api does not offer any limitation for maximum number of requests per day, but there is a limitation of 3,000 QPM(Queries per minute)
 - `Open Meteo` api used for finding weather is free for non-commercial use but there is a limitation of 10,000 requests per day
 - If the `geocoding` api is not able to fetch lat long, the function `get_lat_lon` returns lat, long as None. The subsequent functions `find_weather` and `find_direction` called for None values of lat long return weather_code and site as "Unknown"
-- In the `get_lat_long` function, there are 2 additional checks. If suppose the location includes '/', the geocoding api is not able to fetch coordinates, hence location before "/" is used to fetch the coordinates. The second condition is when location by default has coordinates, it doesn't get passed to api, instead it is directly used for next function call.
+- In the `get_lat_long` function, there 1 additional check. When location by default has coordinates, it doesn't get passed to api, instead it is directly used for next function call. Also it has caching mechanism whereby if location is found in dictionary, it simply returns the stored lat long and api call is not required.
 - Since the output is supposed to be printed in tab separated manner, so when any column values are not of same length, the next column indentation gets little skewed
