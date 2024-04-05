@@ -1,0 +1,3 @@
+- Google Maps Geocoding Api | https://developers.google.com/maps/documentation/geocoding/requests-geocoding#geocoding-lookup | Helped me understand how to use the geocoding api, what are the required params and headers to be passed to get the api response 
+- Open Meteo | https://open-meteo.com/en/docs/historical-weather-api#hourly=temperature_2m,precipitation,weather_code&location_mode=csv_coordinates | Helped me understand how to use the historical weather api, what are the required params and headers to be passed to get the api response 
+- ChatGPT | https://chat.openai.com/c/78b7aaf2-2954-48f5-9193-5b80c7bd5020 | Helped me structure my code properly
