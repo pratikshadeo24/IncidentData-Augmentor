@@ -8,6 +8,8 @@ import math
 import requests
 from requests.structures import CaseInsensitiveDict
 
+lat_long_dict = {}
+
 
 def fetch_incidents(url):
     """Download PDF data from provided URL
@@ -241,37 +243,43 @@ def find_weather(incident, lat, lon):
 
 
 def get_lat_long(incident):
+
     # Google Maps Geocoding API endpoint
     url = "https://maps.googleapis.com/maps/api/geocode/json"
 
     loc = incident.get('incident_location')
 
-    # Check if the location is already in coordinate format
-    pattern = r'^-?\d{1,2}(?:\.\d+)?, ?-?\d{1,3}(?:\.\d+)?$'
-    if bool(re.match(pattern, loc)):
-        lat, lon = loc.split(",")
-        return float(lat), float(lon)
+    if loc in lat_long_dict:
+        return lat_long_dict[loc]
 
-    # Prepare the parameters for the API request
-    params = {
-        "address": loc,
-        "key": "AIzaSyBijnKeE7jVUe-xzt2lOiHff5Dv-cyhYy0"  # Replace with your actual API key
-    }
+    else:
+        # Check if the location is already in coordinate format
+        pattern = r'^-?\d{1,2}(?:\.\d+)?, ?-?\d{1,3}(?:\.\d+)?$'
+        if bool(re.match(pattern, loc)):
+            lat, lon = loc.split(",")
+            return float(lat), float(lon)
 
-    headers = CaseInsensitiveDict()
-    headers["Accept"] = "application/json"
+        # Prepare the parameters for the API request
+        params = {
+            "address": loc,
+            "key": "AIzaSyBijnKeE7jVUe-xzt2lOiHff5Dv-cyhYy0"  # Replace with your actual API key
+        }
 
-    # Make the request to the Google Maps API
-    resp = requests.get(url, headers=headers, params=params)
-    resp = resp.json()
+        headers = CaseInsensitiveDict()
+        headers["Accept"] = "application/json"
 
-    try:
-        # Extract the latitude and longitude from the API response
-        results = resp['results'][0]['geometry']['location']
-        lat, lon = results['lat'], results['lng']
+        # Make the request to the Google Maps API
+        resp = requests.get(url, headers=headers, params=params)
+        resp = resp.json()
+
+        try:
+            # Extract the latitude and longitude from the API response
+            results = resp['results'][0]['geometry']['location']
+            lat, lon = results['lat'], results['lng']
+        except (IndexError, KeyError, Exception) as e:
+            lat, lon = None, None
+        lat_long_dict[loc] = (lat, lon)
         return lat, lon
-    except (IndexError, KeyError, Exception) as e:
-        return None, None
 
 
 def find_direction(lat, lon):
