@@ -41,7 +41,7 @@ $ pipenv run python -m pytest
 ```
 
 ## Demo
-https://github.com/pratikshadeo24/cis6930sp24-assignment0/assets/30438714/ad9da13c-00d8-4e67-83cd-9c03dc82c1af
+https://github.com/pratikshadeo24/cis6930sp24-assignment2/assets/30438714/52926f70-3df9-4235-9f8d-71a7e8c07e47
 
 ## Code Description
 
