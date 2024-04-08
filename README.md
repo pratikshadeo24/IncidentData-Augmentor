@@ -32,7 +32,7 @@ $ pipenv install requests
 
 ## How to Run
 ```commandline
-$ pipenv run python assignment2.py --urls <file_name.csv>
+$ pipenv run python assignment2.py --urls files.csv
 ```
 
 ## How to Test
