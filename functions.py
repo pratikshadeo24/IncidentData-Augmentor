@@ -254,9 +254,9 @@ def get_lat_long(incident):
 
     else:
         # Check if the location is already in coordinate format
-        pattern = r'^-?\d{1,2}(?:\.\d+)?, ?-?\d{1,3}(?:\.\d+)?$'
+        pattern = r'^-?\d{1,2}(?:\.\d+)?;?-?\d{1,3}(?:\.\d+)?$'
         if bool(re.match(pattern, loc)):
-            lat, lon = loc.split(",")
+            lat, lon = loc.split(";")
             lat_long_dict[loc] = (float(lat), float(lon))
             return float(lat), float(lon)
 

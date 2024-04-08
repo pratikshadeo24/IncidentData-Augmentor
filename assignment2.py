@@ -1,6 +1,5 @@
 import argparse
-from assignment2 import assignment
-# import assignment
+import functions
 
 
 def main(urls_filename):
@@ -12,14 +11,14 @@ def main(urls_filename):
 
     for url in urls:
         # get incident PDF data
-        incident_data = assignment.fetch_incidents(url)
+        incident_data = functions.fetch_incidents(url)
 
         # extract incident data
-        incidents = assignment.extract_incidents(incident_data)
+        incidents = functions.extract_incidents(incident_data)
 
         all_incidents.extend(incidents)
 
-    augmented_incidents = assignment.augment_and_print_data(all_incidents)
+    augmented_incidents = functions.augment_and_print_data(all_incidents)
 
 
 if __name__ == "__main__":

@@ -1,5 +1,5 @@
 import pytest
-from assignment2.main import main
+from assignment2 import main
 
 
 @pytest.fixture
@@ -11,11 +11,11 @@ def mock_urls():
 def test_main(mocker, mock_urls):
     # Mocks
     mocker.patch('builtins.open', mocker.mock_open(read_data='\n'.join(mock_urls)))
-    fetch_incidents_mock = mocker.patch("assignment2.assignment.fetch_incidents", return_value="PDF data")
-    extract_incidents_mock = mocker.patch("assignment2.assignment.extract_incidents", return_value=[{'incident_data': 'data'}])
-    # create_json_mock = mocker.patch("assignment2.assignment.create_json")
-    augment_data_mock = mocker.patch("assignment2.assignment.augment_and_print_data", return_value=[{'augmented_data': 'data'}])
-    # print_augmented_data_mock = mocker.patch("assignment2.assignment.print_augmented_data")
+    fetch_incidents_mock = mocker.patch("functions.fetch_incidents", return_value="PDF data")
+    extract_incidents_mock = mocker.patch("functions.extract_incidents", return_value=[{'incident_data': 'data'}])
+    # create_json_mock = mocker.patch("functions.create_json")
+    augment_data_mock = mocker.patch("functions.augment_and_print_data", return_value=[{'augmented_data': 'data'}])
+    # print_augmented_data_mock = mocker.patch("functions.print_augmented_data")
 
     # Path to the file containing URLs
     urls_filename = "urls.txt"

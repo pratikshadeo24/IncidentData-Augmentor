@@ -1,5 +1,5 @@
 import pytest
-from assignment2 import assignment
+import functions
 
 
 @pytest.fixture
@@ -45,7 +45,7 @@ def weather_resp_json():
 ])
 def test_check_ems_stat(sample_incidents, current_incident, current_index, expected):
     # Execute
-    actual_val = assignment.check_ems_stat(current_incident, sample_incidents, current_index)
+    actual_val = functions.check_ems_stat(current_incident, sample_incidents, current_index)
 
     # Assert
     assert actual_val == expected
@@ -61,7 +61,7 @@ def test_augment_incident():
     incident_rank = {'Mutual Aid': 2, 'Traffic Stop': 1}
 
     # Execute
-    assignment.augment_incident(incident, location_rank, incident_rank)
+    functions.augment_incident(incident, location_rank, incident_rank)
 
     # Asserts
     assert incident['day_of_week'] == 7
@@ -72,7 +72,7 @@ def test_augment_incident():
 
 def test_calculate_location_ranks(sample_incidents):
     # Execute
-    actual_loc_ranks = assignment.calculate_location_ranks(sample_incidents)
+    actual_loc_ranks = functions.calculate_location_ranks(sample_incidents)
 
     # Expect
     expected_loc_ranks = {'1880 CLASSEN BLVD': 1, '2120 W BROOKS ST': 2}
@@ -84,7 +84,7 @@ def test_calculate_location_ranks(sample_incidents):
 
 def test_calculate_incident_ranks(sample_incidents):
     # Execute
-    actual_loc_ranks = assignment.calculate_incident_ranks(sample_incidents)
+    actual_loc_ranks = functions.calculate_incident_ranks(sample_incidents)
 
     # Expect
     expected_loc_ranks = {'Mutual Aid': 2, 'Traffic Stop': 1}
@@ -96,12 +96,12 @@ def test_calculate_incident_ranks(sample_incidents):
 
 def test_augment_and_print_data(mocker, sample_incidents):
     # Mocks
-    mocker.patch('assignment2.assignment.get_lat_long',
+    mocker.patch('functions.get_lat_long',
                  return_value=(35.20458136231884, -97.43226908695652))
-    mocker.patch('assignment2.assignment.find_weather', return_value=0)
+    mocker.patch('functions.find_weather', return_value=0)
 
     # Execute
-    actual_aug_incidents = assignment.augment_and_print_data(sample_incidents)
+    actual_aug_incidents = functions.augment_and_print_data(sample_incidents)
 
     # Expected
     expected_aug_incidents = [
@@ -154,7 +154,7 @@ def test_augment_and_print_data(mocker, sample_incidents):
 ])
 def test_find_direction(lat, lon, expected):
     # Execute
-    actual_direction = assignment.find_direction(lat, lon)
+    actual_direction = functions.find_direction(lat, lon)
 
     # Asserts
     assert actual_direction == expected
@@ -169,10 +169,10 @@ def test_find_weather(mocker, weather_resp_json, incident, lat, lon, expected):
     # Mocks
     mock_spi_resp = mocker.Mock()
     mock_spi_resp.json.return_value = weather_resp_json
-    mocker.patch('assignment2.assignment.requests.get', return_value=mock_spi_resp)
+    mocker.patch('functions.requests.get', return_value=mock_spi_resp)
 
     # Execute
-    actual_weather_code = assignment.find_weather(incident, lat, lon)
+    actual_weather_code = functions.find_weather(incident, lat, lon)
 
     # Assert
     assert actual_weather_code == expected
@@ -187,7 +187,7 @@ def test_find_weather(mocker, weather_resp_json, incident, lat, lon, expected):
      {'results': [{'formatted_address': 'Classen Blvd & Telluride Ln, Norman, OK 73071, USA', 'place_id': 'EiUxMDYyIgQ',
                    'types': ['intersection'], 'geometry': {'location': {'lat': 35.1942994, 'lng': -97.42392339999999}}}]},
      (35.1942994, -97.42392339999999)),
-    ({'incident_location': '35.189401448979595, -97.45121940816327'},
+    ({'incident_location': '35.189401448979595;-97.45121940816327'},
      {'results': [{'county': 'Cleveland County', 'street': 'West Imhoff Road', 'housenumber': '750',
                    'lon': -97.45121940816327, 'lat': 35.189401448979595}]},
      (35.189401448979595, -97.45121940816327))
@@ -196,10 +196,10 @@ def test_get_lat_long(mocker, incident, loc_resp_json, expected):
     # Mocks
     mock_spi_resp = mocker.Mock()
     mock_spi_resp.json.return_value = loc_resp_json
-    mocker.patch('assignment2.assignment.requests.get', return_value=mock_spi_resp)
+    mocker.patch('functions.requests.get', return_value=mock_spi_resp)
 
     # Execute
-    actual_weather_code = assignment.get_lat_long(incident)
+    actual_weather_code = functions.get_lat_long(incident)
 
     # Assert
     assert actual_weather_code[0] == expected[0]
