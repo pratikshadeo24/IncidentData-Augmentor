@@ -64,7 +64,7 @@ def test_augment_incident():
     functions.augment_incident(incident, location_rank, incident_rank)
 
     # Asserts
-    assert incident['day_of_week'] == 7
+    assert incident['day_of_week'] == 8
     assert incident['time_of_day'] == 0
     assert incident['location_rank'] == 1
     assert incident['incident_rank'] == 1

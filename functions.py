@@ -238,7 +238,10 @@ def find_weather(incident, lat, lon):
 
     resp = requests.get(url, params=params)
     resp = resp.json()
-    weather_code = resp['hourly']['weather_code'][hour]
+    try :
+        weather_code = resp['hourly']['weather_code'][hour]
+    except Exception as e:
+        weather_code = "Unknown"
     return weather_code
 
 
@@ -375,7 +378,7 @@ def augment_incident(incident, location_ranks, incident_ranks):
     incident_datetime_str = incident.get("incident_time", "1/1/1900 00:00")
     incident_datetime = datetime.strptime(incident_datetime_str, "%m/%d/%Y %H:%M")
 
-    incident['day_of_week'] = incident_datetime.isoweekday()
+    incident['day_of_week'] = incident_datetime.isoweekday() + 1
     incident['time_of_day'] = incident_datetime.hour
     incident['location_rank'] = location_ranks.get(incident['incident_location'], -1)
     incident['incident_rank'] = incident_ranks.get(incident['incident_nature'], -1)
@@ -387,7 +390,7 @@ def print_headers():
         "Location Rank", "Side of Town", "Incident Rank",
         "Nature", "EMSSTAT"
     ]
-    print("\t".join(headers))
+    print("\t\t".join(headers))
 
 
 def print_augmented_data(incident):
@@ -401,4 +404,4 @@ def print_augmented_data(incident):
     side_of_town = incident.get('side_of_town')
     weather = incident.get('weather')
 
-    print(f"{day_of_week}\t{time_of_day}\t{weather}\t{location_rank}\t{side_of_town}\t{incident_rank}\t{incident_nature}\t{ems_stat}")
+    print(f"{day_of_week}\t\t{time_of_day}\t\t{weather}\t\t{location_rank}\t\t{side_of_town}\t\t{incident_rank}\t\t{incident_nature}\t\t{ems_stat}")

@@ -3,7 +3,6 @@ import functions
 
 
 def main(urls_filename):
-
     with open(urls_filename, 'r') as file:
         urls = file.read().splitlines()
 
