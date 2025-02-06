@@ -266,7 +266,7 @@ def get_lat_long(incident):
         # Prepare the parameters for the API request
         params = {
             "address": loc,
-            "key": "AIzaSyBijnKeE7jVUe-xzt2lOiHff5Dv-cyhYy0"
+            "key": ""
         }
 
         headers = CaseInsensitiveDict()
